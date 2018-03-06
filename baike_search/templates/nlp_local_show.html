@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>语言计算实验室</title>
+</head>
+<!-- Docs master nav -->
+<header class="navbar navbar-default" role="banner">
+  <div class="container">
+    <div class="navbar-header">
+      <a href="/index" class="navbar-brand">语言计算实验室(LC-LAB)</a> </div>
+    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav">
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               语言计算技术 <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/nlp_index">NLP综合处理平台(网址版)</a></li>
+               <li><a href="/nlp_index_local">NLP综合处理平台(文本版)</a></li>
+
+            </ul>
+         </li>
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               词语计算 <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a  href="/search_index">百科知识集成平台</a></li>
+                <li><a  href="/ncc_index">NCC领域历时标题语料库</a></li>
+                <li><a href="/word_search_index">领域词聚类检索</a></li>
+            </ul>
+         </li>
+
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               热点计算 <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/online_news_index">实时社会热点检索</a></li>
+               <li><a href="/offline_news_index">历时社会热点检索</a></li>
+            </ul>
+         </li>
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               人物计算 <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+             <li><a href="/person_relation_search_index">人物关系知识图谱</a></li>
+               <li><a  href="/story_kg_search_index">小说人物知识图谱</a></li>
+
+            </ul>
+         </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               文学计算<b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a  href="/book_search_index">图书百科知识平台</a></li>
+                  <li><a  href="/novel_search_index">文学画像检索平台</a></li>
+            </ul>
+         </li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               职位计算<b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a  href="/job_search_index">职位画像知识平台</a></li>
+            </ul>
+         </li>
+          </ul>
+    </nav>
+  </div>
+</header>
+<center>
+<br>
+<br>
+<div class="ui grid">
+  <div class="three wide column"></div>
+  <div class="ten wide column">
+    <h1><font size="6" face="黑体">NLP综合处理平台(文本版)</font></h1>
+    <br>
+
+   <form action="/nlp_process_local/" method="get">
+       <div class="ui fluid icon input">
+       <input type="text" placeholder="请输入文本"  name="q">
+       <i class="search icon"></i>
+       </div>
+   </form>
+
+      <br>
+      <!-- 文本显示开始 -->
+         <h4 class="ui horizontal divider header"></i>输入文本信息</h4>
+          <div class="ui form">
+            <div class="field">
+    <textarea style="margin-top: 0px; margin-bottom: 0px; height: 100px;">{{ content }}</textarea>
+            </div>
+          </div>
+
+      <!-- 网页文本显示结束 -->
+      <!-- 分词文本显示开始 -->
+      <h4 class="ui horizontal divider header"> 文本分词及词性标注 </h4>
+      <div class="ui raised segment">
+          <div class="ui form">
+            <div class="field">
+    <textarea style="margin-top: 0px; margin-bottom: 0px; height: 169px;">{{ seg_text }}</textarea>
+            </div>
+          </div>
+      </div>
+      <!-- 分词文本显示结束 -->
+
+      <!-- 词频显示开始 -->
+      <h4 class="ui horizontal divider header">文本词频 </h4>
+      <div class="ui raised segment">
+    <!-- ECharts单文件引入 -->
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="height:400px"></div>
+    <!-- ECharts单文件引入 -->
+    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+    <script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: 'http://echarts.baidu.com/build/dist'
+            }
+        });
+
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+            ],
+
+            function show_data(ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('main'));
+                var name = {{ item_list|safe }};
+                var num = {{ value_list|safe }};
+                // 同步执行
+                option = {
+    title : {
+        text: '词频信息',
+
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['词频']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line', 'bar']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            data : name
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            name:'词频',
+            type:'bar',
+            data:num,
+            markPoint : {
+                data : [
+                    {type : 'max', name: '最大值'},
+                    {type : 'min', name: '最小值'}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name: '平均值'}
+                ]
+            }
+        },
+    ]
+};
+                // 为echarts对象加载数据
+
+                myChart.setOption(option);
+            }
+        );
+    </script>
+      </div>
+      <!-- 词频显示结束 -->
+      <!-- 词云开始 -->
+      <h4 class="ui horizontal divider header">文本关键词 </h4>
+      <div class="ui raised segment">
+    <div id="main_2" style="height:300px"></div>
+    <!-- ECharts单文件引入 -->
+    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+    <script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: 'http://echarts.baidu.com/build/dist'
+            }
+        });
+
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/wordCloud' // 使用柱状图就加载bar模块，按需加载
+            ],
+
+            function show_data(ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('main_2'));
+                // 同步执行
+
+function createRandomItemStyle() {
+    return {
+        normal: {
+            color: 'rgb(' + [
+                Math.round(Math.random() * 160),
+                Math.round(Math.random() * 160),
+                Math.round(Math.random() * 160)
+            ].join(',') + ')'
+        }
+    };
+}
+
+option = {
+    title: {
+        text: '关键词词云',
+    },
+    tooltip: {
+        show: true
+    },
+    series: [{
+        name: '关键词词云',
+        type: 'wordCloud',
+        size: ['80%', '80%'],
+        textRotation : [0, 45, 90, -45],
+        textPadding: 0,
+        autoSize: {
+            enable: true,
+            minSize: 14
+        },
+        data: function get_data(){
+            var key_list ={{key_list|safe}};
+            var value_list={{weight_list|safe}};
+            var result_list=[];
+            for (i in key_list)
+            {
+                var item={
+                name:key_list[i] ,
+                value: value_list[i],
+                itemStyle: createRandomItemStyle()
+                }
+                result_list.push(item);
+            };
+            return result_list;
+            }(),
+    }]
+    };
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+    </script>
+      </div>
+      <!-- 词云结束 -->
+      <!-- 文本分类开始 -->
+      <h4 class="ui horizontal divider header">文本分类 </h4>
+        <div class="ui raised segment">
+        <h1>{{text_target}}</h1>
+        <table class="ui inverted green table">
+         <tr><th class="six wide">文本类型</th>
+            <th class="ten wide">文本类型可能性</th>
+         </tr>
+        {%for result in text_score_list %}
+        <tr>
+          {% for item in result %}
+           <td>{{item}}</td>
+           {% endfor %}
+       </tr>
+           {% endfor %}
+    </table>
+      </div>
+
+      <!-- 文本分类结束 -->
+      <!-- 实体信息表格开始 -->
+      <h4 class="ui horizontal divider header">文本实体 </h4>
+      <div class="ui raised segment">
+        <table class="ui inverted blue table">
+         <tr><th class="six wide">实体类别</th>
+            <th class="ten wide">实体名称</th>
+         </tr>
+        {%for result in entity_list %}
+        <tr>
+          {% for item in result %}
+           <td>{{item}}</td>
+           {% endfor %}
+       </tr>
+           {% endfor %}
+    </table>
+      </div>
+      <!-- 实体信息表格结束 -->
+     <!-- 情感分析信息表开始 -->
+      <h4 class="ui horizontal divider header">文本情感倾向 </h4>
+      <div class="ui raised segment">
+      <h1> {{target_sentiment}}&nbsp;{{sentiment_type_target}}</h1>
+        <table class="ui inverted purple table">
+         <tr><th class="six wide">情感小类</th>
+            <th class="ten wide">情感小类比例</th>
+         </tr>
+        {%for result in sentiments_score_list %}
+        <tr>
+          {% for item in result %}
+           <td>{{item}}</td>
+           {% endfor %}
+       </tr>
+           {% endfor %}
+    </table>
+
+      </div>
+    <!-- 情感分析饼图结束 -->
+    <!-- 文本拼音开始 -->
+      <h4 class="ui horizontal divider header"><i class="bar chart icon"></i>文本转拼音 </h4>
+      <div class="ui raised segment">
+        {{text_pinyin}}
+      </div>
+    <!-- 文本拼音结束 -->
+    {# 这是页面底部#}
+      <br>
+      <br>
+      <br>
+  </div>
+<div class="three wide column"></div>
+</div>
+</center>
+ <div class="footer" align="center">
+   <p>语言计算实验室Copyright© 2016 <a href="www.scentlip.com">www.scentlip.com</a> All Rights Reserved-京ICP备16038988</p>
+
+</div>
+</body>
+
+<link rel="stylesheet" type="text/css" href="/static/semantic/dist/semantic.min.css"/>
+    <script type="text/javascript" src="/static/semantic/dist/semantic.min.js"></script>
+    <link href="/static/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/bootstrap/dist/js/bootstrap.min.js"></script>
+</html>

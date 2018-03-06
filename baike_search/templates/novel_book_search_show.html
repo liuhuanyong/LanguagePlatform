@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>语言计算实验室</title>
+</head>
+<!-- Docs master nav -->
+<header class="navbar navbar-default" role="banner">
+  <div class="container">
+    <div class="navbar-header">
+      <a href="/index" class="navbar-brand">语言计算实验室(LC-LAB)</a> </div>
+    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav">
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               语言计算技术 <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/nlp_index">NLP综合处理平台(网址版)</a></li>
+               <li><a href="/nlp_index_local">NLP综合处理平台(文本版)</a></li>
+
+            </ul>
+         </li>
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               词语计算 <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a  href="/search_index">百科知识集成平台</a></li>
+                <li><a  href="/ncc_index">NCC领域历时标题语料库</a></li>
+                <li><a href="/word_search_index">领域词聚类检索</a></li>
+            </ul>
+         </li>
+
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               热点计算 <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="/online_news_index">实时社会热点检索</a></li>
+               <li><a href="/offline_news_index">历时社会热点检索</a></li>
+            </ul>
+         </li>
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               人物计算 <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+             <li><a href="/person_relation_search_index">人物关系知识图谱</a></li>
+               <li><a  href="/story_kg_search_index">小说人物知识图谱</a></li>
+
+            </ul>
+         </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               文学计算<b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a  href="/book_search_index">图书百科知识平台</a></li>
+                  <li><a  href="/novel_search_index">文学画像检索平台</a></li>
+            </ul>
+         </li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               职位计算<b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a  href="/job_search_index">职位画像知识平台</a></li>
+            </ul>
+         </li>
+          </ul>
+    </nav>
+  </div>
+</header>
+<body>
+<br>
+
+<center>
+<div class="ui grid">
+  <div class="three wide column"></div>
+  <div class="ten wide column">
+   <h1><font size="6" face="黑体">文学作品画像检索</font></h1>
+   <form action="/novel_book_search_result/" method="get">
+       <div class="ui fluid icon input">
+        <input type="text" placeholder="Search..."  name="q">
+       <i class="search icon"></i>
+       </div>
+   </form>
+      <P>支持2400+作家画像检索、7100+文学作品画像检索、20个文学体裁画像检索</P>
+      <table class="ui  olive table">
+    <tr>
+    <th class="five wide"><a href="/novel_type_search_index">文学体裁画像检索</a></th>
+    <th class="six wide"><a href="/author_search_index">作家画像检索</a></th>
+    <th class="five wide"><a href="/novel_book_search_index">文学作品画像检索</a></th>
+    </tr>
+    </table>
+    {# 这是页面底部#}
+
+<h4 class="ui horizontal dark divider header"><i class="bar chart icon"></i>《 {{name}}》基本信息</h4>
+       <table class="ui  olive table">
+    <tr>
+        <th class="eight wide">类型</th>
+        <th class="eight wide" >内容</th>
+    </tr>
+       <tr>
+           <td>类型</td><td>{{novel_type}}</td>
+       </tr><tr>
+           <td>名称</td><td>{{name}}</td>
+       </tr>
+           <tr>
+           <td>作者</td><td>{{author}}</td>
+       </tr>
+        <tr>
+           <td>总字数</td><td>{{length}}</td>
+       </tr>
+           <tr>
+           <td>评价</td><td><a href={{book_link}}>查看</a></td>
+       </tr>
+       </table>
+
+    <div id=”footer”>
+    </div>
+
+       <h4 class="ui horizontal dark divider header"><i class="bar chart icon"></i>《 {{name}}》内容特征</h4>
+       <table class="ui  red table">
+    <tr>
+        <th class="two wide">类型</th>
+        <th class="fourteen wide" >内容</th>
+    </tr>
+       <tr>
+           <td>关键词</td><td>{{key_words}}</td>
+       </tr>
+       <tr>
+           <td>高频形容词</td><td>{{words_adj}}</td>
+       </tr>
+       <tr>
+           <td>高频名词</td><td>{{words_noun}}</td>
+       </tr>
+       <tr>
+           <td>高频动词</td><td>{{words_verb}}</td>
+       </tr>
+           </table>
+
+    <h4 class="ui horizontal dark divider header"><i class="bar chart icon"></i> 《{{name}}》用词数据</h4>
+       <table class="ui  yellow table">
+    <tr>
+        <th class="eight wide">类型</th>
+        <th class="eight wide" >内容</th>
+    </tr>
+           <tr>
+           <td>用词总数</td><td>{{word_all}}</td>
+       </tr>
+           <tr>
+           <td>用词种数</td><td>{{word_types}}</td>
+       </tr>
+           <tr>
+           <tr>
+           <td>一字词词频</td><td>{{word1_count}}</td>
+       </tr>
+           <tr>
+           <td>二字词词频</td><td>{{word2_count}}</td>
+       </tr>
+            <tr>
+           <td>三字词词频</td><td>{{word3_count}}</td>
+       </tr>
+             <tr>
+           <td>四字词词频</td><td>{{word4_count}}</td>
+       </tr>
+             <tr>
+           <td>五字词词频</td><td>{{word5_count}}</td>
+       </tr>
+            <tr>
+           <td>六字词词频</td><td>{{word6_count}}</td>
+       </tr>
+
+           </table>
+
+ <h4 class="ui horizontal dark divider header"><i class="bar chart icon"></i>《 {{name}}》作品用词特征</h4>
+       <table class="ui  green table">
+    <tr>
+        <th class="two wide">类型</th>
+        <th class="fourteen wide" >内容</th>
+    </tr>
+      <tr>
+           <td>高频一字词</td><td>{{word1_list}}</td>
+       </tr>
+           <tr>
+           <td>高频二字词</td><td>{{word2_list}}</td>
+       </tr>
+           <tr>
+           <td>高频三字词</td><td>{{word3_list}}</td>
+       </tr>
+           <tr>
+           <td>高频四字词</td><td>{{word4_list}}</td>
+       </tr>
+           <tr>
+           <td>高频五字词</td><td>{{word5_list}}</td>
+       </tr>
+           <tr>
+           <td>高频六字词</td><td>{{word6_list}}</td>
+       </tr>
+       </table>
+      <br>
+</div>
+
+
+<div class="three wide column"></div>
+</div>
+</center>
+  <div class="footer" align="center">
+   <p>语言计算实验室Copyright© 2016 <a href="www.scentlip.com">www.scentlip.com</a> All Rights Reserved-京ICP备16038988</p>
+
+</div>
+</body>
+
+<link rel="stylesheet" type="text/css" href="/static/semantic/dist/semantic.min.css"/>
+    <script type="text/javascript" src="/static/semantic/dist/semantic.min.js"></script>
+    <link href="/static/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/bootstrap/dist/js/bootstrap.min.js"></script>
+</html>
